@@ -1,0 +1,41 @@
+class Staff:
+    def __init__(self, staff_id, name, role, password):
+        self.staff_id = staff_id
+        self.name = name
+        self.role = role
+        self.password = password
+
+class AirportSystem:
+    def __init__(self):
+        self.staff_db = {}
+
+    def register_staff(self, staff_id, name, role, password):
+        if staff_id in self.staff_db:
+            print("Staff ID already exists.")
+        else:
+            self.staff_db[staff_id] = Staff(staff_id, name, role, password)
+            print(f"Staff {name} registered successfully.")
+
+    def sign_in(self, staff_id, password):
+        staff = self.staff_db.get(staff_id)
+        if staff and staff.password == password:
+            print(f"Welcome {staff.name} ({staff.role})! Sign-in successful.")
+        else:
+            print("Invalid ID or password. Sign-in failed.")
+
+    def show_all_staff(self):
+        print("\n--- Registered Staff ---")
+        for staff in self.staff_db.values():
+            print(f"ID: {staff.staff_id}, Name: {staff.name}, Role: {staff.role}")
+        print("------------------------")
+
+
+# Example usage
+airport = AirportSystem()
+airport.register_staff("A001", "Umang", "Security", "pass123")
+airport.register_staff("A002", "Aarav", "Ground Crew", "crew456")
+
+airport.sign_in("A001", "pass123")  # Successful
+airport.sign_in("A002", "wrongpass")  # Failed
+
+airport.show_all_staff()
